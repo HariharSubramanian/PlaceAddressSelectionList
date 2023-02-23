@@ -1,0 +1,41 @@
+<!-- <p>location-selector works!</p> -->
+<div class="container-fluid example-wrapper">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 example-col">
+            <p>Country</p>
+            <kendo-dropdownlist
+            [data]="dataCountry"
+            [value]="selectedCountry"
+            [defaultItem]="defaultCountry"
+            textField="countryName"
+            valueField="countryId"
+            (valueChange)="handleCountryChange($event)"
+            >
+            </kendo-dropdownlist>
+        </div>
+        <div class="col-xs-12 col-sm-4 example-col">
+            <p>State</p>
+            <kendo-dropdownlist
+            [data]="dataState"
+            [value]="selectedState"
+            [defaultItem]="defaultState"
+            textField="stateName"
+            valueField="stateId"
+            (valueChange)="handleStateChange($event)"
+            >
+            </kendo-dropdownlist>
+        </div>
+        <div class="col-xs-12 col-sm-4 example-col">
+            <p>City</p>
+            <kendo-dropdownlist
+            [data]="dataCity"
+            [value]="selectedCity"
+            [defaultItem]="defaultCity"
+            textField="cityName"
+            valueField="cityId"
+            (valueChange)="handleCityChange($event)"
+            >
+            </kendo-dropdownlist>
+        </div>
+    </div>
+</div>

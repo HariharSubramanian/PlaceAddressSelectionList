@@ -66,13 +66,13 @@ export class LocationSelectorComponent {
     stateName: string;
     stateId: number;
     countryId: number;
-  }>;
+  }> | undefined;
 
   public dataResultCity: Array<{
     cityName: string;
     cityId: number;
     stateId: number;
-  }>;
+  }> | undefined;
 
   public selectedCountry: { countryName: string; countryId: number; } | any;
   public selectedState: { stateName: string, stateId: number } | any;

@@ -1,4 +1,3 @@
-<!-- <p>location-selector works!</p> -->
 <div class="container-fluid example-wrapper">
     <div class="row">
         <div class="col-xs-12 col-sm-4 example-col">
@@ -16,9 +15,10 @@
         <div class="col-xs-12 col-sm-4 example-col">
             <p>State</p>
             <kendo-dropdownlist
-            [data]="dataState"
+            [data]="dataResultState"
             [value]="selectedState"
             [defaultItem]="defaultState"
+            [disabled]="isDisabledStates"
             textField="stateName"
             valueField="stateId"
             (valueChange)="handleStateChange($event)"
@@ -28,9 +28,10 @@
         <div class="col-xs-12 col-sm-4 example-col">
             <p>City</p>
             <kendo-dropdownlist
-            [data]="dataCity"
+            [data]="dataResultCity"
             [value]="selectedCity"
             [defaultItem]="defaultCity"
+            [disabled]="isDisabledCity"
             textField="cityName"
             valueField="cityId"
             (valueChange)="handleCityChange($event)"

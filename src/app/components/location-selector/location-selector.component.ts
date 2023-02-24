@@ -62,21 +62,21 @@ export class LocationSelectorComponent {
     { cityName: "Brisbane", cityId: 56, stateId: 14 },
   ];
 
-  public dataResultState!: Array<{
+  public dataResultState: Array<{
     stateName: string;
     stateId: number;
     countryId: number;
   }>;
 
-  public dataResultCity!: Array<{
+  public dataResultCity: Array<{
     cityName: string;
     cityId: number;
     stateId: number;
   }>;
 
-  public selectedCountry: { countryName: string; countryId: number; } | undefined;
-  public selectedState: { stateName: string, stateId: number } | undefined;
-  public selectedCity: { cityName: string, cityId: number } | undefined;
+  public selectedCountry: { countryName: string; countryId: number; } | any;
+  public selectedState: { stateName: string, stateId: number } | any;
+  public selectedCity: { cityName: string, cityId: number } | any;
 
   handleCountryChange(value: any) {
     this.selectedCountry = value;

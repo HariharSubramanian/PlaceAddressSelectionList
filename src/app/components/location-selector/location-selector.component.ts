@@ -10,19 +10,19 @@ export class LocationSelectorComponent {
   public isDisabledStates = true;
   public isDisabledCity = true;
 
-  public defaultCountry: { countryName: string; countryId: number } = {
+  public defaultCountry: { countryName: string; countryId: number | any } = {
     countryName: "Select Country",
-    countryId: 0,
+    countryId: null,
   };
 
-  public defaultState: { stateName: string, stateId: number } = {
+  public defaultState: { stateName: string, stateId: number | any } = {
     stateName: "Select State",
-    stateId: 0,
+    stateId: null,
   };
 
-  public defaultCity: { cityName: string, cityId: number } = {
+  public defaultCity: { cityName: string, cityId: number | any } = {
     cityName: "Select City",
-    cityId: 0,
+    cityId: null,
   };
 
   public dataCountry: Array<{ countryName: string; countryId: number }> = [
@@ -131,22 +131,22 @@ export class LocationSelectorComponent {
   }>;
 
   public selectedCountry: { countryName: string; countryId: number; } | undefined;
-  public selectedState: { stateName: string, stateId: number, countryId: number } | undefined;
-  public selectedCity: { cityName: string, cityId: number, stateId: number } | undefined;
+  public selectedState: { stateName: string, stateId: number } | undefined;
+  public selectedCity: { cityName: string, cityId: number } | undefined;
 
   handleCountryChange(value: any) {
     this.selectedCountry = value;
     this.selectedState = undefined;
     this.selectedCity = undefined;
 
-    if(value.countryId == this.defaultCountry.countryId) {
+    if(value.countryId === this.defaultCountry.countryId) {
       this.isDisabledStates = true;
       this.dataResultState = [];
     }
     else {
       this.isDisabledStates = false;
       this.dataResultState = this.dataState.filter(
-        (s) => s.countryId == value.countryId
+        (s) => s.countryId === value.countryId
       );
     }
     this.isDisabledCity = true;
@@ -157,16 +157,16 @@ export class LocationSelectorComponent {
   handleStateChange(value: any) {
 
     this.selectedState = value;
-    this.selectedCity = value;
+    this.selectedCity = undefined;
 
-    if (value.stateId == this.defaultState.stateId) {
+    if (value.stateId === this.defaultState.stateId) {
       this.isDisabledCity = true;
       this.dataResultCity = [];
     }
     else {
       this.isDisabledCity = false;
       this.dataResultCity = this.dataCity.filter(
-        (s) => s.stateId == value.stateId
+        (s) => s.stateId === value.stateId
       );
     }
 

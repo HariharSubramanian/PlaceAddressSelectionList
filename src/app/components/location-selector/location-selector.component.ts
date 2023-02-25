@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { Country, State, City } from 'country-state-city';
+
 @Component({
   selector: 'address-location-selector',
   templateUrl: './location-selector.component.html',
@@ -9,6 +11,22 @@ export class LocationSelectorComponent {
 
   public isDisabledStates = true;
   public isDisabledCity = true;
+
+  public countryList = Country.getAllCountries();
+  public stateList = State.getAllStates();
+  public cityList = City.getAllCities();
+
+  public showCountries() {
+    console.log(this.countryList);
+  }
+
+  public showStates() {
+    console.log(this.stateList);
+  }
+
+  public showCities() {
+    console.log(this.cityList);
+  }
 
   public defaultCountry: { countryName: string; countryId: number | any } = {
     countryName: "Select Country",

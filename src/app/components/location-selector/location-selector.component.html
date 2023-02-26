@@ -3,11 +3,11 @@
         <div class="col-xs-12 col-sm-4 example-col">
             <p>Country</p>
             <kendo-dropdownlist
-            [data]="dataCountry"
+            [data]="countryList"
             [value]="selectedCountry"
             [defaultItem]="defaultCountry"
-            textField="countryName"
-            valueField="countryId"
+            textField="name"
+            valueField="isoCode"
             (valueChange)="handleCountryChange($event)"
             >
             </kendo-dropdownlist>
@@ -19,8 +19,8 @@
             [value]="selectedState"
             [defaultItem]="defaultState"
             [disabled]="isDisabledStates"
-            textField="stateName"
-            valueField="stateId"
+            textField="name"
+            valueField="isoCode"
             (valueChange)="handleStateChange($event)"
             >
             </kendo-dropdownlist>
@@ -32,8 +32,8 @@
             [value]="selectedCity"
             [defaultItem]="defaultCity"
             [disabled]="isDisabledCity"
-            textField="cityName"
-            valueField="cityId"
+            textField="name"
+            valueField="name"
             (valueChange)="handleCityChange($event)"
             >
             </kendo-dropdownlist>
@@ -41,12 +41,3 @@
     </div>
 </div>
 
-<div>
-    <button (click)="showCountries()">Click to view all Countries</button>
-</div>
-<div>
-    <button (click)="showStates()">Click to view all States</button>
-</div>
-<div>
-    <button (click)="showCities()">Click to view all Cities</button>
-</div>

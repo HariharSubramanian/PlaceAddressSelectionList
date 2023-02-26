@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { Country, State, City } from 'country-state-city';
 
+import { ICountry, IState, ICity } from 'country-state-city';
+
 @Component({
   selector: 'address-location-selector',
   templateUrl: './location-selector.component.html',
@@ -12,129 +14,77 @@ export class LocationSelectorComponent {
   public isDisabledStates = true;
   public isDisabledCity = true;
 
-  public countryList = Country.getAllCountries();
-  public stateList = State.getAllStates();
-  public cityList = City.getAllCities();
-
-  public showCountries() {
-    console.log(this.countryList);
+  countryList ?: ICountry[];
+  
+  constructor() {
+    this.countryList = Country.getAllCountries();
   }
 
-  public showStates() {
-    console.log(this.stateList);
-  }
-
-  public showCities() {
-    console.log(this.cityList);
-  }
-
-  public defaultCountry: { countryName: string; countryId: number | any } = {
-    countryName: "Select Country",
-    countryId: null,
+  public defaultCountry: ICountry = {
+    name: 'Select Country',
+    phonecode: '',
+    isoCode: '',
+    flag: '',
+    currency: '',
+    latitude: '',
+    longitude: ''
   };
 
-  public defaultState: { stateName: string, stateId: number | any } = {
-    stateName: "Select State",
-    stateId: null,
+  public defaultState: IState = {
+    name: 'Select State',
+    isoCode: '',
+    countryCode: ''
   };
 
-  public defaultCity: { cityName: string, cityId: number | any } = {
-    cityName: "Select City",
-    cityId: null,
+  public defaultCity: ICity = {
+    name: 'Select City',
+    countryCode: '',
+    stateCode: ''
   };
 
-  public dataCountry: Array<{ countryName: string; countryId: number }> = [
-    { countryName: "Mexico", countryId: 1 },
-    { countryName: "Spain", countryId: 2 },
-    { countryName: "India", countryId: 3 },
-    { countryName: "Australia", countryId: 4 },
-  ];
+  public dataResultState?: IState[];
 
-  public dataState: Array<{ stateName: string, stateId: number, countryId: number }> = [
-    { stateName: "Aguascalientes", stateId: 1, countryId: 1 },
-    { stateName: "Durango", stateId: 2, countryId: 1 },
-    { stateName: "Madrid", stateId: 3, countryId: 2 },
-    { stateName: "Toledo", stateId: 4, countryId: 2 },
-    { stateName: "Kerala", stateId: 5, countryId: 3 },
-    { stateName: "Tamil Nadu", stateId: 6, countryId: 3 },
-    { stateName: "New South Wales", stateId: 7, countryId: 4 },
-    { stateName: "Queensland", stateId: 8, countryId: 4 },
-  ];
+  public dataResultCity?: ICity[];
 
-  public dataCity: Array<{ cityName: string, cityId: number, stateId: number }> = [
-    { cityName: "El Llano", cityId: 1, stateId: 1 },
-    { cityName: "Rincón de Romos", cityId: 2, stateId: 1 },
-    { cityName: "Indé", cityId: 3, stateId: 2 },
-    { cityName: "Pueblo Nuevo", cityId: 4, stateId: 2 },
-    { cityName: "El Álamo", cityId: 5, stateId: 3 },
-    { cityName: "La Hiruela", cityId: 6, stateId: 3 },
-    { cityName: "Almorox", cityId: 7, stateId: 4 },
-    { cityName: "Pelahustán", cityId: 8, stateId: 4 },
-    { cityName: "Thalassery", cityId: 9, stateId: 5 },
-    { cityName: "Kozhikode", cityId: 10, stateId: 5 },
-    { cityName: "Chennai", cityId: 11, stateId: 6 },
-    { cityName: "Thanjavur", cityId: 12, stateId: 6 },
-    { cityName: "Sydney", cityId: 13, stateId: 7 },
-    { cityName: "Newcastle", cityId: 14, stateId: 7 },
-    { cityName: "Westbrook", cityId: 15, stateId: 8 },
-    { cityName: "Brisbane", cityId: 16, stateId: 8 },
-  ];
+  public selectedCountry!: ICountry;
+  public selectedState?: IState;
+  public selectedCity?: ICity;
 
-  public dataResultState: Array<{
-    stateName: string;
-    stateId: number;
-    countryId: number;
-  }> | undefined;
-
-  public dataResultCity: Array<{
-    cityName: string;
-    cityId: number;
-    stateId: number;
-  }> | undefined;
-
-  public selectedCountry: { countryName: string; countryId: number; } | any;
-  public selectedState: { stateName: string, stateId: number } | any;
-  public selectedCity: { cityName: string, cityId: number } | any;
-
-  handleCountryChange(value: any) {
+  handleCountryChange(value: ICountry) {
     this.selectedCountry = value;
     this.selectedState = undefined;
     this.selectedCity = undefined;
 
-    if(value.countryId === this.defaultCountry.countryId) {
+    if(value.isoCode === this.defaultCountry.isoCode) {
       this.isDisabledStates = true;
       this.dataResultState = [];
     }
     else {
       this.isDisabledStates = false;
-      this.dataResultState = this.dataState.filter(
-        (s) => s.countryId === value.countryId
-      );
+      this.dataResultState = State.getStatesOfCountry(value.isoCode);
     }
     this.isDisabledCity = true;
     this.dataResultCity = [];
 
   }
 
-  handleStateChange(value: any) {
+  handleStateChange(value: IState) {
 
     this.selectedState = value;
     this.selectedCity = undefined;
 
-    if (value.stateId === this.defaultState.stateId) {
+    if (value.isoCode === this.defaultState.isoCode) {
       this.isDisabledCity = true;
       this.dataResultCity = [];
     }
     else {
       this.isDisabledCity = false;
-      this.dataResultCity = this.dataCity.filter(
-        (s) => s.stateId === value.stateId
-      );
+      this.dataResultCity = City.getCitiesOfState(this.selectedCountry.isoCode,value.isoCode);
     }
 
   }
 
-  handleCityChange(value: any) {
+  handleCityChange(value: ICity) {
     this.selectedCity = value;
   }
 
